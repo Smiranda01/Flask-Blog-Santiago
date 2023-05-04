@@ -26,7 +26,8 @@ load_dotenv()
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
-db.create_all()
+with app.app_context():
+    db.create_all()
 
 gravatar = Gravatar(app,
                     size=100,
@@ -288,7 +289,7 @@ def contact():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+        app.run(debug=True)
 
 
 
