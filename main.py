@@ -26,8 +26,6 @@ load_dotenv()
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
-with app.app_context():
-    db.create_all()
 
 gravatar = Gravatar(app,
                     size=100,
@@ -81,7 +79,8 @@ class Comments(db.Model):
     author = relationship("User", back_populates="comments")
     body = db.Column(db.Text, nullable=False)
 
-
+with app.app_context():
+    db.create_all()
 
 @login_manager.user_loader
 def load_user(user_id):
