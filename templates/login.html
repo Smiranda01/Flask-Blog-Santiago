@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% include 'header.html'%}
+        <!-- Page Header-->
+
+        <header class="masthead" style="background-image: url('{{url_for('static', filename='assets/img/blog_1.jpg')}}')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="page-heading">
+                            <h1>Log in</h1>
+                            <span class="subheading"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main Content-->
+        <main class="mb-4">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="my-5">
+                            <form action="{{ url_for('login') }}" method="post" id="registerForm" data-sb-form-api-token="API_TOKEN" novalidate>
+                                 {{ form.csrf_token }}
+                                <div class="form-floating mb-3">
+                                    {{ form.email(class="form-control", placeholder="example@email.com") }}
+                                    {{ form.email.label }}
+                                    {% for error in form.email.errors %}
+                                        <span class="form-error">{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                <div class="form-floating mb-3">
+                                    {{ form.password(class="form-control", placeholder="password") }}
+                                    {{ form.password.label }}
+                                    {% for error in form.password.errors %}
+                                        <span class="form-error">{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% with messages =  get_flashed_messages() %}
+                                    {% if messages %}
+                                        {% for message in messages %}
+                                            <p>{{ message }}</p>
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endwith %}
+                                <br />
+                                <!-- Submit Button-->
+                                {{ form.login(class="btn btn-outline-primary text-uppercase") }}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- Footer-->
+        {% include 'footer.html' %}

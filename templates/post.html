@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% include 'header.html' %}
+     {% block editor %}{{ ckeditor.load() }}{% endblock %}
+        <!-- Page Header-->
+        <header class="masthead" style="background-image: url(' {{ post.img_url }}')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="post-heading">
+                            <h1>{{ post.title }}</h1>
+                            <h2 class="subheading">{{ post.subtitle }}</h2>
+                            <span class="meta">
+                                Posted by
+                                <a href="#!">{{ post.author.name }}</a>
+                                on {{ post.date }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Post Content-->
+        <article class="mb-4">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <p>{{ post.body|safe }}</p>
+                    </div>
+                </div>
+                <div class="clearfix">
+                        {% if current_user.id == 1 %}<a class="btn btn-primary float-right btn-edit-post" href="{{ url_for('edit_post', post_id=post.id) }}">Edit Post</a>{% endif %}
+                </div>
+            </div>
+         </article>
+         <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="my-5">
+                        {% if not logged_in %}
+                        <h4 class="subheading log-in-invite">Log in to share your thoughts</h4>
+                        {% else %}
+                        <h4 class="subheading">Leave a comment!</h4>
+                            <form action="{{ url_for('show_post', post_id=post.id) }}" method="post" id="contactForm" data-sb-form-api-token="API_TOKEN" novalidate>
+                                 {{ form.csrf_token }}
+                                {{ ckeditor.create(name='body', value=body) }}
+                                <br />
+                                <!-- Submit Button-->
+                                {{ form.comment(class="btn btn-outline-primary text-uppercase") }}
+                            </form>
+                        </div>
+                        {% endif %}
+                        <div class="col-lg-8 col-md-10 mx-auto">
+                        {% for comment in post.comments: %}
+                            <div class="card mb-4">
+                                <div class="card-header bg-primary text-white d-flex align-items-center">
+                                    <img class="rounded-circle mr-3" width="40" height="40" src="{{ comment.author.email |gravatar }}" alt="User Gravatar">
+                                    <div>
+                                        <h6 class="mb-0">{{comment.author.name}}</h6>
+                                    </div>
+                                </div>
+                                <div class="card-body comment">
+                                    {{comment.body|safe}}
+                                </div>
+                            </div>
+                        {% endfor %}
+                        </div>
+                    </div>
+                </div>
+         </div>
+
+        <!-- Footer-->
+        {% include 'footer.html' %}

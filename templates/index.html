@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+     {% include 'header.html' %}
+        <!-- Page Header-->
+        <header class="masthead" style="background-image: url('{{ url_for('static', filename='assets/img/northern-lights.jpg')}}')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">
+                            <h1>Santiago's Blog</h1>
+                            <span class="subheading">A collection of all Santiago's random musings</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </header>
+        <!-- Main Content-->
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <!-- Post preview-->
+                    {% for post in all_posts %}
+                    <div class="post-preview">
+                        <a href="{{ url_for('show_post', post_id=post.id) }}">
+                            <h2 class="post-title">{{ post.title }}</h2>
+                            <h3 class="post-subtitle">{{ post.subtitle}}</h3>
+                        </a>
+                        <p class="post-meta">
+                            Posted by
+                            <a href="#">{{post.author.name}}</a>
+                            {{ post.date }}{% if current_user.id == 1%}<a class="btn-delete" href="{{url_for('delete_post', post_id=post.id)}}">✘</a>{% endif %}
+                        </p>
+                    </div>
+                    <!-- Divider-->
+                    <hr class="my-4" />
+                   {% endfor %}
+                    <!-- Pager-->
+                    <div class="clearfix">
+                        {% if current_user.id == 1%}
+                        <a class="btn btn-primary float-right btn-new-post" href="{{ url_for('new_post') }}">Create New Post</a>
+                        {% endif %}
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer-->
+        {% include 'footer.html' %}
+
