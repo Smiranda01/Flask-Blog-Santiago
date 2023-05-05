@@ -19,7 +19,7 @@ import smtplib
 
 app = Flask(__name__)
 print(__name__)
-app.secret_key = "secretkey"
+app.secret_key = os.getenv("SECRET_KEY")
 load_dotenv()
 
 # CONNECT TO DB
