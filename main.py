@@ -23,7 +23,7 @@ app.secret_key = "secretkey"
 load_dotenv()
 
 # CONNECT TO DB
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -275,8 +275,8 @@ def contact():
         email = form.email.data
         phone = form.phone.data
         message = form.message.data
-        my_gmail = os.environ.get("MY_GMAIL")
-        password = os.environ.get("PASSWORD")
+        my_gmail = os.getenv("MY_GMAIL")
+        password = os.getenv("PASSWORD")
         send_email(my_gmail=my_gmail, password=password, name=name, email=email,
                    phone=phone, message=message)
         form.name.data = ""
