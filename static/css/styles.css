@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@charset "UTF-8";
 /*!
 * Start Bootstrap - Clean Blog v6.0.9 (https://startbootstrap.com/theme/clean-blog)
 * Copyright 2013-2023 Start Bootstrap
@@ -10679,7 +10680,9 @@ blockquote {
     transform: translate3d(0, 100%, 0);
   }
 }
-
+.heading{
+    font-size: 3.5rem !important;
+}
 footer {
   padding-top: 3rem;
   padding-bottom: 3rem;

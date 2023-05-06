@@ -79,6 +79,7 @@ class Comments(db.Model):
     author = relationship("User", back_populates="comments")
     body = db.Column(db.Text, nullable=False)
 
+
 with app.app_context():
     db.create_all()
 
