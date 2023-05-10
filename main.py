@@ -124,7 +124,7 @@ class LoginUserForm(FlaskForm):
 
 
 def send_email(my_gmail, password, name, email, phone, message):
-    with smtplib.SMTP("smtp.gmail.com") as connection:
+    with smtplib.SMTP("smtp.gmail.com", 587) as connection:
         connection.starttls()
         connection.login(user=my_gmail, password=password)
         message = f"Subject: {name} wants to reach out!\n\n"\
@@ -198,6 +198,7 @@ def logout():
 @app.route("/")
 def get_all_posts():
     posts = db.session.query(BlogPost).all()
+    print(posts)
     return render_template("index.html", all_posts=posts, logged_in=current_user.is_authenticated)
 
 
@@ -214,7 +215,7 @@ def show_post(post_id):
         db.session.commit()
     requested_post = BlogPost.query.get(post_id)
     return render_template("post.html", post=requested_post, logged_in=current_user.is_authenticated, form=form,
-                           gravatar=gravatar )
+                           gravatar=gravatar)
 
 
 @app.route("/new-post", methods=["GET", "POST"])
