@@ -178,8 +178,6 @@ def login():
         if user:
             if check_password_hash(user.password, password):
                 login_user(user)
-                if user == admin:
-                    current_user.is_admin = True
                 return redirect(url_for("get_all_posts"))
             else:
                 flash("Invalid Password")
